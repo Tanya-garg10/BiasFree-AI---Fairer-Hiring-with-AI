@@ -30,35 +30,36 @@ export default function Home() {
         });
         return;
       }
-      try {
-        const res = await fetch("http://localhost:8000/analyze", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: val }),
-        });
-        const result = await res.json();
-        setData({
-          score: result.score ?? 100,
-          issues: result.issues ?? [],
-          breakdown: result.breakdown ?? { "Gender Bias": 0, "Age Bias": 0, "Cultural Bias": 0, "Neutral": 100 },
-          impact: result.impact ?? "Fair and inclusive.",
-          tone: result.tone ?? "Neutral"
-        });
-      } catch (err) {
-        console.error("Analysis failed", err);
-      }
-    }, 500); // 500ms delay for typing feedback
-  };
-
-  const autoFix = async () => {
-    if (!text.trim()) return;
-    setLoading(true);
-    try {
-      const res = await fetch("http://localhost:8000/rewrite", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const res = await fetch(`${apiUrl}/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ text: val }),
       });
+      const result = await res.json();
+      setData({
+        score: result.score ?? 100,
+        issues: result.issues ?? [],
+        breakdown: result.breakdown ?? { "Gender Bias": 0, "Age Bias": 0, "Cultural Bias": 0, "Neutral": 100 },
+        impact: result.impact ?? "Fair and inclusive.",
+        tone: result.tone ?? "Neutral"
+      });
+    } catch (err) {
+      console.error("Analysis failed", err);
+    }
+  }, 500); // 500ms delay for typing feedback
+};
+
+const autoFix = async () => {
+  if (!text.trim()) return;
+  setLoading(true);
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const res = await fetch(`${apiUrl}/rewrite`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
       
       if (!res.ok) throw new Error("API Key missing or Invalid");
       
