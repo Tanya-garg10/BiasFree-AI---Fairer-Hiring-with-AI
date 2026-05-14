@@ -1,0 +1,25 @@
+{
+  "gender_bias": {
+    "rockstar": "high-performer",
+    "ninja": "expert",
+    "guru": "specialist",
+    "guy": "professional",
+    "salesman": "sales professional",
+    "aggressive": "results-driven",
+    "dominant": "influential"
+  },
+  "age_bias": {
+    "young": "dynamic",
+    "digital native": "tech-savvy",
+    "fresh blood": "new perspectives",
+    "mature": "experienced",
+    "energetic": "motivated"
+  },
+  "cultural_bias": {
+    "native speaker": "fluent in",
+    "culture fit": "culture add",
+    "master": "primary",
+    "slave": "secondary",
+    "blacklist": "blocklist"
+  }
+}
