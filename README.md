@@ -13,22 +13,16 @@ Often, job descriptions contain subtle gender, age, or cultural biases (e.g., us
 - Providing a real-time inclusivity score.
 - Offering an AI-powered "Magic Fix" to automatically rewrite the JD into inclusive language.
 
----
-
 ## ✨ Key Features
 - **Real-time Bias Detection:** Highlights Gender, Age, and Cultural bias instantly.
 - **Inclusivity Scoring:** A dynamic 0-100 metric based on linguistic analysis.
 - **AI-Powered Magic Fix:** One-click rewrite using GPT-4 to make JDs professional and neutral.
 - **Data-Driven Logic:** Uses an extensible, fast JSON-based bias dictionary.
 
----
-
 ## 🛠️ Tech Stack
 - **Frontend:** Next.js 14, React, Tailwind CSS, Lucide Icons.
 - **Backend:** FastAPI (Python), Uvicorn, OpenAI API.
 - **Database/Data Store:** Extensible JSON mappings.
-
----
 
 ## 📂 Project Structure
 ```text
@@ -49,8 +43,6 @@ biasfree-ai/
 │   └── package.json             # Node.js dependencies
 └── README.md
 ```
-
----
 
 ## 🏃‍♂️ Quick Start
 
@@ -85,8 +77,6 @@ npm run dev
 ```
 *The frontend will be running on `http://localhost:3000`*
 
----
-
 ## 📡 API Endpoints
 
 ### `POST /analyze`
@@ -115,8 +105,6 @@ Uses OpenAI's GPT-4 to rewrite the provided text to be unbiased.
     "rewritten_text": "We are looking for a high-performer developer..."
   }
   ```
-
----
 
 ## 🚀 Future Enhancements
 - **Chrome Extension:** Integrate the tool directly into LinkedIn workflows for recruiters.
