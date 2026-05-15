@@ -43,6 +43,10 @@ def get_bias_data():
 class JDRequest(BaseModel):
     text: str
 
+@app.get("/")
+async def root():
+    return {"message": "BiasFree AI Backend is running!"}
+
 @app.post("/analyze")
 async def analyze(request: JDRequest):
     if not request.text:
