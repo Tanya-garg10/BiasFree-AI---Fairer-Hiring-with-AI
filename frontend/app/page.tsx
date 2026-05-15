@@ -20,34 +20,35 @@ export default function Home() {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     
     debounceRef.current = setTimeout(async () => {
-      if (!val.trim()) {
-        setData({
-          score: 100,
-          issues: [],
-          breakdown: { "Gender Bias": 0, "Age Bias": 0, "Cultural Bias": 0, "Neutral": 100 },
-          impact: "Fair and inclusive.",
-          tone: "Neutral",
+      try {
+        if (!val.trim()) {
+          setData({
+            score: 100,
+            issues: [],
+            breakdown: { "Gender Bias": 0, "Age Bias": 0, "Cultural Bias": 0, "Neutral": 100 },
+            impact: "Fair and inclusive.",
+            tone: "Neutral",
+          });
+          return;
+        }
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const res = await fetch(`${apiUrl}/analyze`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: val }),
         });
-        return;
+        const result = await res.json();
+        setData({
+          score: result.score ?? 100,
+          issues: result.issues ?? [],
+          breakdown: result.breakdown ?? { "Gender Bias": 0, "Age Bias": 0, "Cultural Bias": 0, "Neutral": 100 },
+          impact: result.impact ?? "Fair and inclusive.",
+          tone: result.tone ?? "Neutral"
+        });
+      } catch (err) {
+        console.error("Analysis failed", err);
       }
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      const res = await fetch(`${apiUrl}/analyze`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: val }),
-      });
-      const result = await res.json();
-      setData({
-        score: result.score ?? 100,
-        issues: result.issues ?? [],
-        breakdown: result.breakdown ?? { "Gender Bias": 0, "Age Bias": 0, "Cultural Bias": 0, "Neutral": 100 },
-        impact: result.impact ?? "Fair and inclusive.",
-        tone: result.tone ?? "Neutral"
-      });
-    } catch (err) {
-      console.error("Analysis failed", err);
-    }
-  }, 500); // 500ms delay for typing feedback
+    }, 500); // 500ms delay for typing feedback
 };
 
 const autoFix = async () => {
